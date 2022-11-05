@@ -1,0 +1,26 @@
+# Maven
+.mvn/
+target/
+
+# Eclipse
+bin/
+.classpath
+.project
+.settings/
+.springBeans
+
+# IDEA
+.idea/
+*.iml
+out/
+
+# Cassandra
+.toDelete
+
+# logs
+*.log
+
+# misc
+*.gz
+
+**/.flattened-pom.xml
