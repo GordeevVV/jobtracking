@@ -4,13 +4,13 @@
 
 CREATE TABLE IF NOT EXISTS public.tasks
 (
-    id bigint NOT NULL DEFAULT nextval('tasks_id_seq'::regclass),
-    name character varying(256) COLLATE pg_catalog."default",
-    status character varying(256) COLLATE pg_catalog."default",
+    id bigint NOT NULL,
+    name character varying COLLATE pg_catalog."default",
+    status character varying COLLATE pg_catalog."default",
     difficulty double precision,
-    description character varying(256) COLLATE pg_catalog."default",
+    description character varying COLLATE pg_catalog."default",
     "implementerId" bigint,
-    report character varying(256) COLLATE pg_catalog."default",
+    report character varying COLLATE pg_catalog."default",
     CONSTRAINT tasks_pkey PRIMARY KEY (id),
     CONSTRAINT "tasks_implementerId_fkey" FOREIGN KEY ("implementerId")
         REFERENCES public.persons (id) MATCH SIMPLE

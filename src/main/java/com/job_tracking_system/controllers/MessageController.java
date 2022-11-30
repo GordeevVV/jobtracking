@@ -20,11 +20,8 @@ public class MessageController {
     public String registerUser(@RequestParam String login, @RequestParam String password, @RequestParam String position, Model model) {
         Person user = new Person(login, password, position);
 
-        // TODO save user to database
+        // save user to database
         personJpaRepository.save(user);
-
-        // TODO send out registration email
-        // mailService.sendRegistrationEmail(user);
 
         model.addAttribute("user", user);
         return "registration-success";
