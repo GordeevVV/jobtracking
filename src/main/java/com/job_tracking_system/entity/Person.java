@@ -5,6 +5,16 @@ import javax.persistence.*;
 @Entity
 @Table(name= "persons")
 public class Person {
+
+    public Person() {
+    }
+
+    public Person(String login, String password, String position) {
+        this.login = login;
+        this.password = password;
+        this.position = position;
+    }
+
     @Id
     @Column(nullable = false)
     private long personId;
