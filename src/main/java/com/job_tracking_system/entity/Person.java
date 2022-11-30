@@ -17,17 +17,18 @@ public class Person {
 
     @Id
     @Column(nullable = false)
-    private long personId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String login;
     private String password;
     private String position;
 
-    public long getPersonId() {
-        return personId;
+    public long getId() {
+        return id;
     }
 
-    public void setPersonId(long personId) {
-        this.personId = personId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getLogin() {

@@ -7,10 +7,11 @@ import javax.persistence.*;
 public class Task {
     @Id
     @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private String status;
-    private float difficulty;
+    private double difficulty;
     private String description;
     private int implementerId;
     private String report;
@@ -39,11 +40,11 @@ public class Task {
         this.status = status;
     }
 
-    public float getDifficulty() {
+    public double getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(float difficulty) {
+    public void setDifficulty(double difficulty) {
         this.difficulty = difficulty;
     }
 
