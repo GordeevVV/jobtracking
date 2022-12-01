@@ -5,6 +5,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tasks")
 public class Task {
+    public Task() {
+    }
+
+    public Task(String name, String status, double difficulty, String description) {
+        this.name = name;
+        this.status = status;
+        this.difficulty = difficulty;
+        this.description = description;
+    }
+
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +23,7 @@ public class Task {
     private String status;
     private double difficulty;
     private String description;
-    private int implementerId;
+    private long implementerId;
     private String report;
 
     public long getId() {
@@ -56,11 +66,11 @@ public class Task {
         this.description = description;
     }
 
-    public int getImplementerId() {
+    public long getImplementerId() {
         return implementerId;
     }
 
-    public void setImplementerId(int implementerId) {
+    public void setImplementerId(long implementerId) {
         this.implementerId = implementerId;
     }
 
