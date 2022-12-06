@@ -1,12 +1,25 @@
 package com.job_tracking_system.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.job_tracking_system.entity.Person;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.*;
 
+@Getter
+@Setter
+@Accessors(chain = true)
+@NoArgsConstructor
 @Entity
-@Table(name = "tasks")
+@Table(name= "tasks")
+@EntityListeners(AuditingEntityListener.class)
 public class Task {
-    public Task() {
-    }
 
     public Task(String name, String status, double difficulty, String description) {
         this.name = name;
@@ -23,62 +36,12 @@ public class Task {
     private String status;
     private double difficulty;
     private String description;
-    private long implementerId;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "person_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Person person;
+
     private String report;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public double getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(double difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public long getImplementerId() {
-        return implementerId;
-    }
-
-    public void setImplementerId(long implementerId) {
-        this.implementerId = implementerId;
-    }
-
-    public String getReport() {
-        return report;
-    }
-
-    public void setReport(String report) {
-        this.report = report;
-    }
 }

@@ -11,5 +11,5 @@ public interface TaskJpaRepository extends JpaRepository<Task, Long> {
     Task findByName(String login);
     List<Task> findByStatus(String status);
     List<Task> findByDifficulty(Double difficulty);
-    List<Task> findByImplementerId(Long implementerId);
+    List<Task> findByPersonId(Long personId);
 }
