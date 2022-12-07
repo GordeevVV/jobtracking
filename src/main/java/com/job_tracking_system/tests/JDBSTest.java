@@ -1,6 +1,7 @@
 package com.job_tracking_system.tests;
 
 import com.job_tracking_system.App;
+import com.job_tracking_system.entity.ERole;
 import com.job_tracking_system.entity.Person;
 import com.job_tracking_system.entity.Task;
 import com.job_tracking_system.repository.PersonJpaRepository;
@@ -8,29 +9,20 @@ import com.job_tracking_system.repository.TaskJpaRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.MOCK,
-        classes = App.class)
-@AutoConfigureMockMvc
+@SpringBootTest(classes = App.class)
 @TestPropertySource(
         locations = "classpath:application-test.properties")
 public class JDBSTest {
-
-    @Autowired
-    private MockMvc mvc;
     @Autowired
     private PersonJpaRepository personJpaRepository;
     @Autowired
@@ -39,7 +31,7 @@ public class JDBSTest {
     //TEST NAMING STRUCTURE *method name* + *RepositoryName* + Test
     @Test
     public void savePersonTest() {
-        Person person = new Person("login", "password", "position");
+        Person person = new Person("login", "password", ERole.ROLE_IMPLEMENTER);
         Person savedPerson = personJpaRepository.save(person);
         assertThat(savedPerson).usingRecursiveComparison().ignoringFields("id").isEqualTo(person);
         personJpaRepository.deleteAll();
@@ -55,7 +47,7 @@ public class JDBSTest {
 
     @Test
     public void findByIdPersonTest() {
-        Person person = new Person("login", "password", "position");
+        Person person = new Person("login", "password", ERole.ROLE_MANAGER);
         Person savedPerson = personJpaRepository.save(person);
         assertThat(savedPerson).usingRecursiveComparison().isEqualTo(personJpaRepository.findById(savedPerson.getId()).get());
         personJpaRepository.deleteAll();
@@ -71,8 +63,8 @@ public class JDBSTest {
 
     @Test
     public void findAllPersonTest() {
-        Person person1 = new Person("login1", "password1", "position1");
-        Person person2 = new Person("login2", "password2", "position2");
+        Person person1 = new Person("login1", "password1", ERole.ROLE_IMPLEMENTER);
+        Person person2 = new Person("login2", "password2", ERole.ROLE_MANAGER);
         personJpaRepository.save(person1);
         personJpaRepository.save(person2);
         assertThat(personJpaRepository.findAll()).asList().size().isEqualTo(2);
@@ -132,24 +124,24 @@ public class JDBSTest {
         Task task1 = new Task("name1", "status1", 1.0, "desc1");
         Task task2 = new Task("name2", "status2", 2.0, "desc2");
         Task task3 = new Task("name3", "status3", 1.0, "desc3");
-        Person person = new Person("login", "password", "position");
-        person.setPosition("implementer");
+        Person person = new Person("login", "password");
+        person.setRole(ERole.ROLE_IMPLEMENTER);
         Person savedPerson = personJpaRepository.save(person);
-        task1.setImplementerId(savedPerson.getId());
-        task3.setImplementerId(savedPerson.getId());
+        task1.setPerson(savedPerson);
+        task3.setPerson(savedPerson);
         taskJpaRepository.save(task1);
         taskJpaRepository.save(task2);
         taskJpaRepository.save(task3);
         List<Task> list = new ArrayList<>();
         list.add(task1);
         list.add(task3);
-        assertThat(taskJpaRepository.findByImplementerId(task1.getImplementerId())).usingRecursiveComparison().isEqualTo(list);
+        assertThat(taskJpaRepository.findByPersonId(task1.getPerson().getId())).usingRecursiveComparison().isEqualTo(list);
         taskJpaRepository.deleteAll();
     }
 
     @Test
     public void findByLoginPersonTest() {
-        Person person = new Person("login1", "password1", "position1");
+        Person person = new Person("login1", "password1");
         Person savedPerson = personJpaRepository.save(person);
         assertThat(personJpaRepository.findByLogin(savedPerson.getLogin())).usingRecursiveComparison().isEqualTo(savedPerson);
         personJpaRepository.deleteAll();
@@ -157,16 +149,23 @@ public class JDBSTest {
 
     @Test
     public void findByPositionPersonTest() {
-        Person person1 = new Person("login1", "password1", "position1");
-        Person person2 = new Person("login2", "password2", "position1");
-        Person person3 = new Person("login3", "password3", "position3");
+        Person person1 = new Person("login1", "password1", ERole.ROLE_MANAGER);
+        Person person2 = new Person("login2", "password2", ERole.ROLE_MANAGER);
+        Person person3 = new Person("login3", "password3", ERole.ROLE_IMPLEMENTER);
         Person savedPerson1 = personJpaRepository.save(person1);
         Person savedPerson2 = personJpaRepository.save(person2);
         Person savedPerson3 = personJpaRepository.save(person3);
         List<Person> list = new ArrayList<>();
         list.add(savedPerson1);
         list.add(savedPerson2);
-        assertThat(personJpaRepository.findByPosition(savedPerson1.getPosition())).usingRecursiveComparison().isEqualTo(list);
+        assertThat(personJpaRepository.findByRole(savedPerson1.getRole())).usingRecursiveComparison().isEqualTo(list);
+        personJpaRepository.deleteAll();
+    }
+    @Test
+    public void findByloginAndPasswordPersonTest(){
+        Person person = new Person("login1", "password1", ERole.ROLE_MANAGER);
+        Person savedPerson = personJpaRepository.save(person);
+        assertThat(personJpaRepository.findPersonByLoginAndPassword(savedPerson.getLogin(), savedPerson.getPassword())).usingRecursiveComparison().isEqualTo(savedPerson);
         personJpaRepository.deleteAll();
     }
 }

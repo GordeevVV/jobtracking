@@ -7,9 +7,9 @@ CREATE TABLE IF NOT EXISTS public.persons
     id bigint NOT NULL,
     login character varying COLLATE pg_catalog."default",
     password character varying COLLATE pg_catalog."default",
-    "position" character varying COLLATE pg_catalog."default",
+    role character varying(255) COLLATE pg_catalog."default",
     CONSTRAINT persons_pkey PRIMARY KEY (id),
-    CONSTRAINT login_unique UNIQUE (login)
+    CONSTRAINT ukbe68cfdb8jkwvgh9902j3bq1l UNIQUE (login)
     )
 
     TABLESPACE pg_default;

@@ -9,13 +9,13 @@ CREATE TABLE IF NOT EXISTS public.tasks
     status character varying COLLATE pg_catalog."default",
     difficulty double precision,
     description character varying COLLATE pg_catalog."default",
-    "implementerId" bigint,
     report character varying COLLATE pg_catalog."default",
+    person_id bigint NOT NULL,
     CONSTRAINT tasks_pkey PRIMARY KEY (id),
-    CONSTRAINT "tasks_implementerId_fkey" FOREIGN KEY ("implementerId")
+    CONSTRAINT fk83wtk1uwa6l9aokatgtwbnik9 FOREIGN KEY (person_id)
         REFERENCES public.persons (id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
 )
 
     TABLESPACE pg_default;
