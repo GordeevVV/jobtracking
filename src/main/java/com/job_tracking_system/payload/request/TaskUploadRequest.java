@@ -1,4 +1,4 @@
-package com.job_tracking_system.entity;
+package com.job_tracking_system.payload.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,18 +15,13 @@ import javax.validation.constraints.Positive;
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskDTO {
+public class TaskUploadRequest {
+
     @NotBlank(message = "Task name is required!")
     private String name;
-    @NotBlank(message = "Task status is required!")
-    private String status;
     @NotNull
     @Positive(message = "Difficulty cannot be Zero or negative")
     private double difficulty;
     @NotBlank(message = "Task description is required!")
     private String description;
-
-    private long implementerId;
-
-    private String report;
 }

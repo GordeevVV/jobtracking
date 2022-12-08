@@ -89,7 +89,7 @@ public class AuthController {
                 if ("implementer".equals(strRole)) {
                     role = ERole.ROLE_IMPLEMENTER;
                 }
-                else throw new RuntimeException("Error: Role is not found.");
+                else return ResponseEntity.badRequest().body(new MessageResponse("Error: Can't apply such type of role!"));
             }
         }
 
