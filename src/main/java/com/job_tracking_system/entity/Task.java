@@ -1,16 +1,15 @@
 package com.job_tracking_system.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.job_tracking_system.entity.Person;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -21,7 +20,7 @@ import javax.persistence.*;
 @EntityListeners(AuditingEntityListener.class)
 public class Task {
 
-    public Task(String name, String status, double difficulty, String description) {
+    public Task(String name, EStatus status, double difficulty, String description) {
         this.name = name;
         this.status = status;
         this.difficulty = difficulty;
@@ -30,18 +29,31 @@ public class Task {
 
     @Id
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "menuSeq")
+    @SequenceGenerator(name = "menuSeq", initialValue = 1, allocationSize = 1, sequenceName = "MENU_SEQUENCE")
     private long id;
+
+    @NotBlank
     private String name;
-    private String status;
+
+    @NotBlank
+    @Enumerated(EnumType.STRING)
+    private EStatus status;
+
+    @NotBlank
     private double difficulty;
+
+    @NotBlank
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "person_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "person_id")
     @JsonIgnore
     private Person person;
+
+    private LocalDateTime begin;
+
+    private LocalDateTime end;
 
     private String report;
 }

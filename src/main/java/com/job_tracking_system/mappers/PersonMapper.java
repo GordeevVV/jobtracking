@@ -5,12 +5,13 @@ import com.job_tracking_system.entity.PersonDTO;
 
 public class PersonMapper {
     public static Person DtoToEntity(PersonDTO personDTO){
-        return new Person().setPassword(personDTO.getPassword())
-                .setLogin(personDTO.getLogin());
+        return new Person()
+                .setLogin(personDTO.getLogin())
+                .setRole(personDTO.getRole());
     }
     public static PersonDTO EntityToDto(Person person){
         return new PersonDTO()
                 .setLogin(person.getLogin())
-                .setPassword(person.getPassword());
+                .setRole(person.getRole());
     }
 }

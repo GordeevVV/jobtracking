@@ -14,7 +14,5 @@ import javax.validation.constraints.NotBlank;
 public class PersonDTO {
     @NotBlank(message = "Login is required!")
     private String login;
-    @NotBlank(message = "Password is required!")
-    private String password;
-    private String position;
+    private ERole role;
 }

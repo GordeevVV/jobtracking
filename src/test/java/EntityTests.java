@@ -1,7 +1,5 @@
-package com.job_tracking_system.tests;
-
-
 import com.job_tracking_system.App;
+import com.job_tracking_system.entity.EStatus;
 import com.job_tracking_system.entity.Person;
 import com.job_tracking_system.entity.Task;
 import org.junit.Test;
@@ -21,7 +19,7 @@ public class EntityTests {
     @Test
     public void TaskTest() {
         Task task = new Task();
-        Task task1 = new Task("name", "status", 1.0, "desc");
+        Task task1 = new Task("name", EStatus.STATUS_ASSIGNED, 1.0, "desc");
     }
 
     @Test
@@ -34,7 +32,7 @@ public class EntityTests {
     public void setTaskTest(){
         Task task = new Task();
         task.setName("name");
-        task.setStatus("status");
+        task.setStatus(EStatus.STATUS_CREATED);
         task.setDescription("desc");
         task.setDifficulty(1.0);
     }
@@ -52,11 +50,11 @@ public class EntityTests {
     public void getTaskTest(){
         Task task = new Task();
         task.setName("name");
-        task.setStatus("status");
+        task.setStatus(EStatus.STATUS_CREATED);
         task.setDescription("desc");
         task.setDifficulty(1.0);
         String one = task.getName();
-        String two = task.getStatus();
+        EStatus two = task.getStatus();
         String three = task.getDescription();
         Double four = task.getDifficulty();
         Long five = task.getId();

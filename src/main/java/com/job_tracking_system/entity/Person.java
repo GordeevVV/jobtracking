@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -39,8 +40,10 @@ public class Person {
     @SequenceGenerator(name = "menuSeq", initialValue = 1, allocationSize = 1, sequenceName = "MENU_SEQUENCE")
     private long id;
     @NotBlank
+    @Size(max = 20)
     private String login;
     @NotBlank
+    @Size(max = 20)
     private String password;
 
     @NotBlank
