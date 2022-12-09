@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -29,4 +30,6 @@ public class TaskDTO {
     private long implementerId;
 
     private String report;
+
+    private CustomTime duration;
 }
