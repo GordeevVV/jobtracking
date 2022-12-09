@@ -49,6 +49,8 @@ public class TaskController {
         return ResponseEntity.ok().body(new MessageResponse("Task successfully created"));
     }
 
+    //Сам на себя ассайн таски
+
     //1 Ассайн таски на имплементера с изменением статуса и началом отсчета времени выполнения(если было null раньше)
     @PostMapping(value = "/assign")
     @PreAuthorize("hasRole('MANAGER')")
@@ -85,4 +87,6 @@ public class TaskController {
         taskJpaRepository.save(task);
         return ResponseEntity.ok().body(new MessageResponse("Task successfully updated"));
     }
+
+    //Удалить задачу
 }

@@ -36,8 +36,8 @@ public class Person {
 
     @Id
     @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "menuSeq")
-    @SequenceGenerator(name = "menuSeq", initialValue = 1, allocationSize = 1, sequenceName = "MENU_SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "personSeq")
+    @SequenceGenerator(name = "personSeq", initialValue = 1, allocationSize = 1, sequenceName = "PERSON_SEQUENCE")
     private long id;
     @NotBlank
     @Size(max = 20)

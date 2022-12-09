@@ -27,7 +27,7 @@ public class TaskDTO {
     @NotBlank(message = "Task description is required!")
     private String description;
 
-    private long implementerId;
+    private Long implementerId;
 
     private String report;
 

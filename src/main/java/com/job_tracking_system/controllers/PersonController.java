@@ -1,29 +1,17 @@
 package com.job_tracking_system.controllers;
 
-import com.job_tracking_system.entity.EStatus;
 import com.job_tracking_system.entity.Person;
-import com.job_tracking_system.entity.Task;
 import com.job_tracking_system.exceptions.PersonNotFoundException;
-import com.job_tracking_system.exceptions.TaskNotFoundException;
 import com.job_tracking_system.mappers.PersonMapper;
-import com.job_tracking_system.mappers.TaskMapper;
-import com.job_tracking_system.payload.request.TaskAssignRequest;
-import com.job_tracking_system.payload.request.TaskCompleteRequest;
-import com.job_tracking_system.payload.request.TaskUploadRequest;
-import com.job_tracking_system.payload.responce.MessageResponse;
 import com.job_tracking_system.payload.responce.UserInfoResponse;
 import com.job_tracking_system.repository.PersonJpaRepository;
-import com.job_tracking_system.repository.TaskJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/persons")

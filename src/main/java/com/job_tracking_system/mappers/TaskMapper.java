@@ -19,26 +19,34 @@ public class TaskMapper {
 
     public static TaskDTO EntityToDto(Task task) {
         CustomTime customTime = new CustomTime();
-        if (Objects.nonNull(task.getBeginTime()) && Objects.nonNull(task.getEndTime())) {
-            LocalDateTime tempDateTime = LocalDateTime.from(task.getBeginTime());
-            long hours = tempDateTime.until(task.getEndTime(), ChronoUnit.HOURS);
-            tempDateTime = tempDateTime.plusHours(hours);
-
-            long minutes = tempDateTime.until(task.getEndTime(), ChronoUnit.MINUTES);
-            tempDateTime = tempDateTime.plusMinutes(minutes);
-
-            long seconds = tempDateTime.until(task.getEndTime(), ChronoUnit.SECONDS);
-            customTime.setHours(hours);
-            customTime.setMinutes(minutes);
-            customTime.setSeconds(seconds);
+        if (Objects.nonNull(task.getBeginTime())) {
+            if(Objects.nonNull(task.getEndTime())) {
+              customTime = TaskMapper.getCustomTime(LocalDateTime.from(task.getBeginTime()), task.getEndTime());
+            } else {
+                customTime = TaskMapper.getCustomTime(LocalDateTime.from(task.getBeginTime()), LocalDateTime.now());
+            }
         }
         return new TaskDTO().setName(task.getName())
                 .setStatus(task.getStatus().toString())
                 .setDifficulty(task.getDifficulty())
                 .setDescription(task.getDescription())
-                .setImplementerId(task.getId())
+                .setImplementerId(Objects.isNull(task.getPerson())? null: task.getPerson().getId())
                 .setReport(task.getReport())
                 .setDuration(customTime);
+    }
+    private static CustomTime getCustomTime(LocalDateTime tempDateTime, LocalDateTime endTime){
+        CustomTime customTime = new CustomTime();
+        long hours = tempDateTime.until(endTime, ChronoUnit.HOURS);
+        tempDateTime = tempDateTime.plusHours(hours);
+
+        long minutes = tempDateTime.until(endTime, ChronoUnit.MINUTES);
+        tempDateTime = tempDateTime.plusMinutes(minutes);
+
+        long seconds = tempDateTime.until(endTime, ChronoUnit.SECONDS);
+        customTime.setHours(hours);
+        customTime.setMinutes(minutes);
+        customTime.setSeconds(seconds);
+        return customTime;
     }
 
     public static EStatus toEStatus(String status) {
