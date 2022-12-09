@@ -51,9 +51,9 @@ public class Task {
     @JsonIgnore
     private Person person;
 
-    private LocalDateTime begin;
+    private LocalDateTime beginTime;
 
-    private LocalDateTime end;
+    private LocalDateTime endTime;
 
     private String report;
 }
