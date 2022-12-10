@@ -4,5 +4,6 @@ public enum EStatus {
     //TODO для имплементера сделать новые статусы
     STATUS_CREATED,
     STATUS_ASSIGNED,
+    STATUS_WORK,
     STATUS_COMPLETED
 }

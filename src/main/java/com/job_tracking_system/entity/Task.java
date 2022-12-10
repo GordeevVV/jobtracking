@@ -46,7 +46,7 @@ public class Task {
     @NotBlank
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id")
     @JsonIgnore
     private Person person;
